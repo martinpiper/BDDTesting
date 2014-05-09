@@ -1,0 +1,93 @@
+Using the idea of Behaviour Driven Design ( https://github.com/cucumber/cucumber/wiki ).
+Create something solves some of the design problems with Cucumber and that allows C++ and Java to be tested.
+
+An example feature file:
+
+@A tag @Another tag
+@Some tag on another line
+Feature: Do something
+  This is free text.
+  It can contain anything until the next Scenario keyword
+ 
+ @A tag that goes onto every scenario
+ Background: Some background setup
+    Given I do this always
+	And I do this always
+ 
+  Scenario: This is a test case
+    Given I have the system in a state
+    And there are classes that operate on these things
+    When I do something else with the text
+	"""
+	Some text
+	"""
+    Then I should see the following result:
+      | Some data   | Another column |
+      | 4321        | foo            |
+      | 1234        | wibble         |
+	But there are no exceptions
+	  
+  @Scenario tag
+  Scenario: Another one
+    Given I have this state
+	When I do this
+	Then there are results
+
+  Scenario: The same as above
+    * I have this state
+	* I do this
+	* there are results
+
+
+#This is a comment. This scenario will run for each row in the examples table
+Scenario Outline: nom nom nom
+  Given there are <start> things
+  When I eat <nom> things
+  Then I should have <left> things
+
+  Examples:
+    | start | nom | left |
+    |  10   |  5  |  5   |
+    |  20   |  15 |  5   |
+
+	
+Scenario Outline: nom nom nom
+#An example of using a previously defined table
+Using table: examples
+  Given there are <start> things
+  When I eat <nom> things
+  Then I should have <left> things
+
+  
+
+Design problems with Cucumber to be solved:
+* It's not easy to add extra reporting information to the output JSON etc.
+	Must be able to add classes that produce JSON data while features are running.
+* Tags don't allow spaces or on multiple lines before features or scenarios
+* Using a previously defined table
+* Instantiation of a glue code class when the regex matches.
+* Tags can be used to instantiate specific classes even when there is a duplicate regex. For example:
+>>Java:
+@For("A tag" , "Scenario tag")
+class Foo {
+@Given("I have the system in a state")
+public void I_have_the_system_in_a_state() {
+}
+}
+
+class Bar {
+// This won't be used for any scenarios with tags "A tag" or "Scenario tag" since class Foo has priority for those scenarios
+@Given("I have the system in a state")
+public void I_have_the_system_in_a_state() {
+}
+}
+
+* Tables with multi-line data.
+* Include/import files syntax?
+* BeforeFeature and AfterFeature tag hooks. 
+* BeforeTag/AfterTag hooks to be the same as @Before/@After
+* Extension of keywords.
+* Extension of tags for keywords.
+	The keywords code can be generic of course.
+* Enumerate keywords. Add/Remove keywords with registered factories.
+* Composability. Cucumber is not composable. It would be nice if the syntax allowed this. Funtions?
