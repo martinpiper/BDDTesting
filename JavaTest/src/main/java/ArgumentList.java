@@ -42,7 +42,7 @@ public class ArgumentList {
 					// If there is an exception then no worries, just try the next one
 				}
 			}
-			// If nothing did the conversion then we the argument list creation
+			// If nothing did the conversion then we abort the argument list creation
 			if ( array[i] == null ) {
 				throw new NumberFormatException("For method '" + method.toString() +"' Could not transform parameter " + i + " '" + arguments.get(i) + "' to type " + destinationTypes[i]);
 			}
