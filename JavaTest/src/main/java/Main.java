@@ -23,11 +23,13 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 		System.out.println("Hello world!");
 
+/*
 		// Technology test: Scan for all loaded class.
 		// This would scan for all loaded classes linked into this application
 		Reflections reflections = new Reflections( ClasspathHelper.forClass(Object.class), new SubTypesScanner(false));
 		Collection<String> directSubtypes = reflections.getStore().get(SubTypesScanner.class).get(Object.class.getName());
 		Set<String> allClasses = reflections.getStore().getSubTypesOf(Object.class.getName());
+ */
 
 		// Technology test: Find a named class
 		Class<?> theClass = ClassFinder.findClass("com.somethingtest.gluecode.TestAnnotate");
@@ -91,12 +93,10 @@ public class Main {
 					Object newClass = theFactory.getInstance(aPattern.method.getDeclaringClass());
 
 					System.out.println("About to invoke: [" + aPattern.method.toString() + "] in: " + newClass.toString());
-					// MPi: TODO: This needs to match the types of the target method, i.e. convert from String to something else.
-					// Parse the array at aPattern.method.parameterTypes
-					// Try mapping each array[] to destination typ in aPattern.method.parameterTypes[]
-					Object[] array = arguments.toArray(new Object[arguments.size()]);
-//					array[0] = (int)1234;
-//					array[1] = (String)"Fooity";
+
+					ArgumentList argsList = new ArgumentList();
+					Object[] array = argsList.create(arguments , aPattern.method);
+
 					Main.invoke(newClass, aPattern.method , 10000000, array);
 
 					System.out.println("Invoked: " + aPattern.method.toString());

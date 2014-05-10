@@ -13,8 +13,8 @@ public class TestAnnotate {
 	}
 
 	@WooityFoo("^I create (\\d+) (.*) things")
-//	public void whenICreateThings(int count, String theThing) throws Exception {
-	public void whenICreateThings(String count, String theThing) throws Exception {
+	public void whenICreateThings(int count, String theThing) throws Exception {
+//	public void whenICreateThings(String count, String theThing) throws Exception {
 		System.out.println("*************** Executing whenICreateThings!!!");
 		if (theThing.equals("foo")) {
 		} else if (theThing.equals("bar")) {
