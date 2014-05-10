@@ -1,7 +1,8 @@
-import java.util.ArrayList;
-
 import junit.framework.TestCase;
 import org.junit.Test;
+
+import java.lang.reflect.Method;
+import java.util.ArrayList;
 
 /**
  */
@@ -19,8 +20,16 @@ public class ArgumentListTest extends TestCase {
 		someValues.add("4");
 		someValues.add("wibble");
 
-		Object[] array = argsList.create(someValues , FooClass.class.getMethod("FooClass.aMethod1"));
+		Class<?>[] params = new Class<?>[2];
+		params[0] = int.class;
+		params[1] = String.class;
+		Method foo = FooClass.class.getMethod("aMethod1" , params);
 
-		assertEquals(array[0].getClass() , int.class);
+		Object[] array = argsList.create(someValues , foo );
+
+		// Integer.class because type argument (for abstract class ConvertThis<T>) cannot be a primitive (which int is) type
+		assertEquals(array[0].getClass() , Integer.class);
+		// The String
+		assertEquals(array[1].getClass() , String.class);
 	}
 }
