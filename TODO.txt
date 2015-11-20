@@ -91,3 +91,11 @@ public void I_have_the_system_in_a_state() {
 	The keywords code can be generic of course.
 * Enumerate keywords. Add/Remove keywords with registered factories.
 * Composability. Cucumber is not composable. It would be nice if the syntax allowed this. Funtions?
+
+
+
+* Macro processor. High level steps to low level step execution
+
+
+
+* Optimising features containing low level steps into high level macros
